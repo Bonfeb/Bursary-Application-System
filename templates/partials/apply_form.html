@@ -1,0 +1,133 @@
+<div class="row">
+    <div class="col-md-6 my-2 p-2">
+        <div class="card">
+            <div class="card-body">
+                <fieldset>
+                <legend class="mt-2"><i class="fa-solid fa-user" style="color: rgba(212, 100, 7, 0.973);"></i> Personal Details</legend>
+                <hr>
+                <div class="row mt-2">
+                  <label>First Name</label>
+                  <input type="text" name="firstName" value="{{ applicant.firstName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                </div>
+                <div class="row mt-2">
+                  <label>Middle Name</label>
+                  <input type="text" name="middleName" value="{{ applicant.middleName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                </div>
+                <div class="row mt-2">
+                  <label>Last Name</label>
+                  <input type="text" name="lastName" value="{{ applicant.lastName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                </div>
+                <div class="row mt-2">
+                  <label>Gender</label>
+                  <input type="text" name="gender" value="{{ applicant.gender }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                </div>
+                <div class="row mt-2">
+                  <label>Date of Birth</label>
+                  <input type="text" name="DOB" value="{{ applicant.DOB }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                </div>
+                <div class="row mt-2">
+                    <label>Contact</label>
+                    <input type="text" name="contact" value="{{ applicant.contact }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                </div>
+                <div class="row mt-2">
+                  <label>Your ID or Birth Certificate (pdf form)</label>
+                  <input type="text" name="IdOrBirth" value="{{ applicant.IdOrBirth }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 p-2 my-2">
+        <div class="card">
+            <div class="card-body">
+                <fieldset>
+                    <legend class="mt-2"><i class="fa-solid fa-users" style="color: rgba(212, 100, 7, 0.973);"></i> Guardian Details</legend>
+                    <hr>
+                    <div class="row">
+                      <label for="guardianname" class="form-label">Guardian Name</label>
+                      <input type="text" name="guardianName" value="{{ guardian.guardianName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                    </div>
+                    <div class="row">
+                      <label for="guardianidnumber" class="form-label">Guardian ID</label>
+                      <input type="text" name="guardianID" value="{{ guardian.guardianID }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                    </div>
+                    <div class="row">
+                      <label for="phoneNumber" class="form-label">Guardian Gender</label>
+                      <input type="text" name="guardianGender" value="{{ guardian.guardianGender }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                    </div>
+                    <div class="row">
+                      <label for="inputEmail4" class="form-label">Guardian Phone Number</label>
+                      <input type="text" name="guardianContact" value="{{ guardian.guardianContact }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                    </div>
+                    <div class="row">
+                      <label for="guardianoccupation" class="form-label">Guardian Occupation</label>
+                      <input type="text" name="guardianOccupation" value="{{ guardian.guardianOccupation }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                    </div>
+                </fieldset>            
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row mt-5">
+      <div class="col-md-6 p-2 my-2">
+        <div class="card">
+            <div class="card-body">
+                <fieldset>
+                    <legend class="mt-2"><i class="fa-solid fa-school" style="color: rgb(145, 7, 64);"></i> Academic Details</legend>
+                    <hr>
+                    <div class="row mt-2">
+                      <label for="schoolname" class="form-label">Institution Name</label>
+                      <input type="text" name="institutionName" value="{{ institution.institutionName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                    </div>
+                    <div class="row mt-2">
+                      <label>Institution Status</label>
+                      <input type="text" name="institutionStatus" value="{{ institution.institutionStatus }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;"> 
+                    </div>
+                    <div class="row mt-2">
+                      <label for="{{ studentForm.studyLevel.id_for_label }}">Level of Study</label>
+                      <input type="text" name="studyLevel" value="{{ institution.studyLevel }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">  
+                    </div>
+                    <div class="row mt-2" id="course-field" style="display: none;">
+                      <label for="{{ studentForm.course.id_for_label }}">Course</label>
+                      {{ studentForm.course }}
+                    </div>
+                    <div class="row mt-2">
+                      <label>Current Year of Study</label>
+                      <input type="text" name="studyYear" value="{{ applicant.studyYear }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;"> 
+                    </div>
+                    <div class="row mt-2">
+                      <label>Admission Number</label>
+                      <input type="text" name="admNo" value="{{ institution.admNo }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 p-4 my-2">
+      <div class="card">
+        <div class="card-body">
+          <fieldset>
+            <legend><i class="fa-solid fa-house" style="color: rgb(145, 7, 64);"></i> Residential Details</legend>
+            <hr>
+              <div class="row">
+                <label for="constituency" class="form-label">Constituency</label>
+                <input type="text" name="constituency" value="{{ constituency.constituencyName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+              </div>
+              <div class="row">
+                <label for="ward" class="form-label">Ward</label>
+                <input type="text" name="wardName" value="{{ ward.wardName }}" readonly style="color: #ccc; background-color: #f8f8f8; cursor: not-allowed;">
+              </div>
+          </fieldset>
+        </div>
+      </div>
+      <div class="mt-4">
+        <button type="submit" class="btn btn-primary btn-md" style="background-color:hsl(157, 96%, 49%)" name="submit">Submit</a>
+      </div>
+    </div>
+  </div>
+</div>
+

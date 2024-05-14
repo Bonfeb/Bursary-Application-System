@@ -1,0 +1,145 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+KCBAWS|home
+{% endblock title%}
+
+{% block content %}
+{% now "d-m-Y H:i:s" as current_datetime %}
+<section class="py-4 py-xl-5">
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            {% if request.user.is_staff %}
+                <h1 class="text-center text-danger"><strong>WARNING!</strong></h1>
+                <hr>
+                <ul type="disc">
+                    <li>Do not give preferential treatment to any applicant based on their personal relationships with you or any other admin.</li>
+                    <br>
+                    <li>Do not give preferential treatment to any applicant based on their ethnicity, tribe, or any other group affiliation.</li>
+                    <br>
+                    <li>Do not disclose any confidential applicant information to anyone without their consent.</li>
+                    <br>
+                    <li>Do not alter or destroy any applicant information.</li>
+                    <br>
+                    <li>Do not use your position as an admin to benefit yourself or your family and friends.</li>
+                </ul>
+            {% elif request.user.is_authenticated %}
+                    <h1 class="text-center text-primary"></h1>
+                    <h6><marquee>Only Apply a Bursary for the Constituency or Ward you reside. Failure to that your application will be rejected!</marquee></h6>
+                    <hr>
+                    <div class="row text-center">
+                        <div class="col">
+                            <div class="card my-2">
+                                <div class="card-header">
+                                    <div class="card-header bg-dark text-center text-white">
+                                        <b>Available Bursaries: {{total_pending_bursaries}}</b>
+                                    </div>
+                                    
+                                    <table class="table table-sm th-dark">
+                                        <tr>
+                                            <th>Brsary Level</th>
+                                            <th>Bursary Amount</th>
+                                            <th>Constituency | Ward</th>
+                                            <th>Deadline Day</th>
+                                            <th>Action</th>
+                                        </tr>
+                                        {% for bursary in pending_bursaries %}
+                                            {% if bursary.deadline >= current_datetime %}
+                                            <tr>
+                                                <td>{{bursary.category}}</td>
+                                                <td>{{bursary.bursaryAmount|floatformat:2}}</td>
+                                                <td>{{bursary.constituency}}|{{ bursary.ward }}</td>
+                                                <td>{{bursary.deadline}}</td>
+                                                <td>
+                                                    {% if user.applicant.firstName %}
+                                                        <a class="btn btn-info" style="background-color: aqua;" href="{% url 'bursary_application' bursary.id %}">Apply</a>
+                                                    {% else %}
+                                                        <a class="btn btn-info" style="background-color: aqua;" href="{% url 'filling_details' %}">Apply</a>
+                                                    {% endif %}
+                                                </td> 
+                                            </tr>
+                                            {% endif %}
+                                        {% empty %}
+                                            <p class="text-center">No bursaries available at the moment.</p>
+                                        {% endfor %}
+                                    </table>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                <h1 class="text-center text-primary">Available Bursaries</h1>
+                <hr>
+                <div class="row text-center">
+                    <div class="col">
+                        <div class="card my-3">
+                            <div class="card-header">
+                                <div class="card-header bg-dark text-center text-white">
+                                    <b>Total: {{total_pending_bursaries}}</b>
+                                </div>
+                                <table class="table table-sm th-dark">
+                                    <tr>
+                                        <th>Bursary Level</th>
+                                        <th>Bursary Amount</th>
+                                        <th>Constituency | Ward </th>
+                                        <th>Deadline Day</th>
+                                    </tr>
+                                    {% for bursary in pending_bursaries %}
+                                        {% if bursary.deadline >= current_datetime %}
+                                        <tr>
+                                            <td>{{bursary.category}}</td>
+                                            <td>{{bursary.bursaryAmount|floatformat:2}}</td>
+                                            <td>{{bursary.constituency}}|{{ bursary.ward }}</td>
+                                            <td>{{bursary.deadline}}</td>
+                                        </tr>
+                                        {% endif %}
+                                    {% empty %}
+                                        <p class="text-center">No bursaries available at the moment.</p>
+                                    {% endfor %}
+                                </table>
+                            </div>
+                            <a class="btn btn-info" style="background-color: aqua;" href="{% url 'register' %}">Apply</a>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        
+        <div class="col-md-6">
+            <div class="carousel carousel-dark slide" data-bs-ride="carousel" id="carousel-1" style="height: 600px;">
+                <div class="carousel-inner h-100">
+                    <div class="carousel-item active h-100"><img class="w-100 d-block position-absolute h-100 fit-cover rounded" src="{% static 'images/slideShowImage1.jpg' %}" alt="Slide Image" style="z-index: -1;">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Nelson Mandela</h5>
+                            <p>Education is the most powerful weapon which you can use to change the world.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item h-100"><img class="w-100 d-block position-absolute h-100 fit-cover rounded" src="{% static 'images/slideShowImage2.jpeg' %}" alt="Slide Image" style="z-index: -1;">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Dr. Seuss</h5>
+                            <p>The more that you read, the more things you will know. The more that you learn, the more places you'll go.</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item h-100"><img class="w-100 d-block position-absolute h-100 fit-cover rounded img-responsive" src="{% static 'images/slideShowImage3.jpeg' %}" alt="Slide Image" style="z-index: -1;">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Oprah Winfrey</h5>
+                                <p>She was born into poverty and experienced abuse at a young age. She went on to become one of the most successful talk show hosts of all time and a billionaire philanthropist.</p>
+                            </div>
+                    </div>
+                </div>
+                <div><a class="carousel-control-prev" href="#carousel-1" role="button" data-bs-slide="prev"><span class="carousel-control-prev-icon"></span><span class="visually-hidden">Previous</span></a><a class="carousel-control-next" href="#carousel-1" role="button" data-bs-slide="next"><span class="carousel-control-next-icon"></span><span class="visually-hidden">Next</span></a></div>
+                <ol class="carousel-indicators">
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="0" class="active"></li>
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="1"></li>
+                    <li data-bs-target="#carousel-1" data-bs-slide-to="2"></li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</div>
+</section>
+
+{% endblock content %}

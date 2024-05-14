@@ -1,0 +1,90 @@
+{% extends 'partials/base.html' %}
+
+{% block content %}
+
+
+<br>
+<div class="row">
+    <div class="col-md-6 offset-md-3 text-center">
+        <h4><strong>{{applicant}}</strong></h4>
+        <hr>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md">
+        <div class="card card body px-2">
+            <h6 class="mt-2 text-center">Profile Information</h6>
+            <hr>
+            <p><strong>Email:</strong> <i>{{applicant.email}}</i></p>
+            <p><strong>Phone:</strong> <i>{{applicant.contact}}</i></p>
+            <p><strong>Guardian:</strong> <i>{{applicant.guardian}}</i></p>
+            <p><strong>Institution:</strong> <i>{{applicant.institution}}</i></p>
+            <p><strong>Constituency:</strong> <i>{{applicant.constituency}}</i></p>
+            <p><strong>Ward:</strong> <i>{{applicant.ward}}</i></p>
+        </div>
+    </div>
+    <div class="col">
+        <div class="col-md">
+            <div class="card card-body">
+                <div class="card-header text-center bg-dark text-white">
+                Total Applications
+                </div>
+                <h1 style="text-align:center; padding: 10px; background-color:bisque;">{{applied_bursaries_count}}</h1>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <div class="col">
+            <div class="card card-body">
+                <form method="get">
+                    {{myFilter.form}}
+
+                    <button class="btn btn-sm btn-info" types="Submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <div class="col-md">
+            <div class="card card-body">
+                <div class="card-header text-center bg-dark text-white">Applicant Bursaries:</div>
+                <table class="table table-sm">
+                    <tr>
+                        <th>Category</th>
+                        <th>Date Created</th>
+                        <th>Deadline</th>
+                        <th>Amount</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for bursary in bursaries %}
+                    <tr>
+                        <td>{{bursary.category}}</td>
+                        <td>{{bursary.dateCreated}}</td>
+                        <td>{{bursary.deadline }}</td>
+                        <td>{{bursary.bursaryAmount|floatformat:2}}</td>
+                        <td>{{bursary.status}}</td>
+                        <td>
+                            {% if bursary.status == 'Pending' %}
+                                <a class="btn btn-sm btn-warning" href="{% url 'update_bursary' bursary.id %}">Update</a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% load static %}
+<nav class="navbar navbar-light navbar-expand-lg navigation-clean fixed-top" style="background-color: rgb(44, 168, 127);">
+    <div class="container"><a class="navbar-brand {% if navbar == 'index' %} active {% endif %}" href="{% url 'index' %}"><img src="{% static 'images/KC-logo.svg' %}" width="30" height="24" class="rounded"> KCBAWS</a><button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-2"><span class="navbar-toggler-icon"></span></button>
+        <div class="collapse navbar-collapse" id="navcol-2">
+            <ul class="navbar-nav ms-auto">
+                {% if request.user.is_staff %}
+                <li class="nav-item"><a class="nav-link {% if navbar == 'admin_dashboard' %} active {% endif %}" href="{% url 'admin_dashboard' %}"><i class="fa fa-dashboard"></i> Dashboard</span></a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'profile' %} active {% endif %}" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i> My Profile</a></li>
+                <li class="nav-item"><a class="nav-link text-danger {% if navbar == 'logout' %} active {% endif %}" href="{% url 'logout' %}">Logout <i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+
+                {% elif user.is_authenticated %}
+                <li class="nav-item"><a class="nav-link {% if navbar == 'index' %} active {% endif %}" href="{% url 'index' %}"><i class="fa fa-home" aria-hidden="true"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'requirements' %} active {% endif %}" href="{% url 'requirements' %}"><i class="fa-brands fa-readme" aria-hidden="true"></i>Eligibility</a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'applicant_dashboard' %} active {% endif %}" href="{% url 'applicant_dashboard' %}"><i class="fa fa-dashboard"></i>Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'contact' %} active {% endif %}" href="{% url 'contact' %}"><i class="fa fa-envelope" aria-hidden="true"></i>Contact Us</a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'profile' %} active {% endif %}" href="{% url 'profile' %}"><i class="fa fa-user" aria-hidden="true"></i>MyProfile</a></li>
+                <li class="nav-item"><a class="nav-link text-danger {% if navbar == 'logout' %} active {% endif %}" href="{% url 'logout' %}">Logout <i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+
+
+                {% else %}
+                <li class="nav-item"><a class="nav-link {% if navbar == 'index' %} active {% endif %}" href="{% url 'index' %}"><i class="fa fa-home" aria-hidden="true"></i> Home</span></a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'requirements' %} active {% endif %}" href="{% url 'requirements' %}"><i class="fa fa-info-circle" aria-hidden="true"></i> Requirements</a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'register' %} active {% endif %}" href="{% url 'register' %}"><i class="fa fa-user-plus" aria-hidden="true"></i> Register</a></li>
+                <li class="nav-item"><a class="nav-link {% if navbar == 'login' %} active {% endif %}" href="{% url 'login' %}"><i class="fa fa-sign-in" aria-hidden="true"></i> Login</a></li>
+                {% endif %}
+                
+            </ul>
+        </div>
+    </div>
+</nav>

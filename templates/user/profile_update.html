@@ -1,0 +1,41 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+{{request.user}} Update Profile
+{% endblock title%}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container mt-5">
+    {% for message in messages %}
+        {{message}}
+    {% endfor %}
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-center text-white">
+                Profile Information
+                </div>
+                <div class="card-body text-center">
+
+                    {% if request.user.profilePicture %}
+                        <img src="{{ request.user.profilePicture.url }}" alt="Profile Picture" class="rounded-circle img-fluid" style="max-width: 200px;">
+                        {{ request.user.profilePicture.url }}
+                    {% else %}
+                        <img src="{% static 'images/profile_avatar.jpg' %}" alt="Default Profile Picture" class="rounded-circle img-fluid" style="max-width: 200px;">
+                    {% endif %}
+                    
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        {{ userForm|crispy }}
+                        <input class="btn btn-info" type="submit" value ="Update">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}

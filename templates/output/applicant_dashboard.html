@@ -1,0 +1,100 @@
+{% extends 'partials/base.html' %}
+
+{% block title %}
+    KCBAWS | {{request.user}} Dashboard
+{% endblock title %}
+
+{% block content %}
+{% for message in messages %}
+    {{ message }}
+{% endfor %}
+<div class="row text-center">
+    {% if user.applicant.firstName %}
+        <a class="btn btn-sm btn-info" style="background-color: aqua;" href="{% url 'update_details' %}">Click me to update your details if you want to.</a>
+    {% else %}
+        <a class="btn btn-sm btn-info" style="background-color: aqua;" href="{% url 'filling_details' %}">Click me to fill in your details.</a>
+    {% endif %}
+</div>
+{% include 'output/applicant_status.html' %}
+<br>
+{% now "d-m-Y H:i:s" as current_datetime %}
+{% if availableBursaries and availableBursaries.count > 0 %}
+<hr>
+<h5 class="text-center" style="color: rgb(116, 76, 2);">Available Bursaries</h5>
+<div class="row text-center">
+    <div class="col">
+        <div class="card my-2">
+            <div class="card-header">
+                <div class="card-header bg-dark text-center text-white">
+                    Total: {{totalAvailableBursaries}}
+                </div>
+                <table class="table table-sm th-dark table-striped">
+                    <tr>
+                        <th>Bursary Level</th>
+                        <th>Constituency | Ward</th>
+                        <th>Bursary Amount</th>
+                        <th>Batch Number</th>
+                        <th>Deadline Day</th>
+                        <th>Action</th>
+                    </tr>
+                    {% for bursary in availableBursaries %}
+                        {% if bursary.deadline >= current_datetime %}
+                            {% if not applicant.constituency == bursary.constituency and applicant.ward == bursary.ward %}
+                            <tr>
+                                <td>{{bursary.category}}</td>
+                                <td>{{bursary.constituency}}|{{ bursary.ward }}</td>
+                                <td>{{bursary.bursaryAmount|floatformat:2}}</td>
+                                <td>{{bursary.batchNumber}}</td>
+                                <td>{{bursary.deadline}}</td>
+                                <td>
+                                    {% if user.applicant.firstName %}
+                                        <a class="btn btn-info" style="background-color: aqua;" href="{% url 'bursary_application' bursary.id%}">Apply</a>
+                                    {% else %}
+                                        <a class="btn btn-info" style="background-color: aqua;" href="{% url 'filling_details' %}">Apply</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if appliedBursaries %}
+<hr>
+<h4 class="text-center" style="color: rgb(116, 76, 2);">Bursaries I have Applied</h4>
+<div class="row text-center">
+    <div class="col">
+        <div class="card my-2">
+            <div class="card-header">
+                <div class="card-header bg-dark text-center text-white">
+                    Total: {{total_applied_bursaries}}
+                </div>
+                <table class="table table-sm th-dark table-striped">
+                    <tr>
+                        <th>Bursary Level</th>
+                        <th>Bursary Amount</th>
+                        <th>Batch Number</th>
+                        <th>Deadline Day</th>
+                        <th>Status</th>
+                    </tr>
+                    {% for bursary in appliedBursaries %}
+                    <tr>
+                        <td>{{bursary.category}}</td>
+                        <td>{{bursary.bursaryAmount|floatformat:2}}</td>
+                        <td>{{bursary.batchNumber}}</td>
+                        <td>{{bursary.deadline}}</td>
+                        <td>{{bursary.status}}</td>
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock content %}

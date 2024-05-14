@@ -1,0 +1,273 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+KCBAWS | {{request.user}} Admin Dashboard
+{% endblock title%}
+
+{% block content %}
+
+{% include 'output/admin_status.html' %}
+
+<div class="row text-center">
+    <div class="col md-6 text-center">
+        <hr>
+        <h5>Bursaries</h5>
+        <div class="row my-2">
+            <div class="col">
+                <div class="card card-body">
+                    <p class="text-center text-secondary"><i>Search Bursary</i></p>
+                    <form method="get">
+                        {{bursaryFilter.form}}
+                        <button class="btn btn-sm btn-info" types="Submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body">
+            <a class="btn btn-primary btn-sm btn-info addlink" href="{% url 'add_bursary' %}">Add/Create Bursary</a>
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Constituency | Ward</th>
+                        <th scope="col">Batch Number</th>
+                        <th scope="col">Bursary Amount</th>
+                        <th scope="col">Financial Year</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for bursary in bursaries %}
+                        {% if forloop.counter <= 10 %}
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ bursary.category }}</td>
+                                <td>{{ bursary.constituency }} | {{bursary.ward}}</td>
+                                <td>{{ bursary.batchNumber }}</td>
+                                <td>{{ bursary.bursaryAmount|floatformat:2 }}</td>
+                                <td>{{ bursary.financialyear }}</td>
+                                <td>{{ bursary.status }}</td>
+                                <td>
+                                    {% if bursary.status == 'Pending' %}
+                                        <a class="btn btn-sm btn-warning" href="{% url 'update_bursary' bursary.id %}">Update</a>
+                                        <a class="btn btn-sm btn-danger" href="{% url 'delete_bursary' bursary.id %}">Delete</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+        </div>
+    </div>
+</div>
+<div class="row text-center">
+    <div class="col md-6 mt-4 text-center">
+        <hr>
+        <h5>Applied Bursaries:</h5>
+        <div class="row my-2">
+            <div class="col">
+                <div class="card card-body">
+                    <p class="text-center text-secondary"><i>Search Bursary</i></p>
+                    <form method="get">
+                        {{bursaryFilter.form}}
+                        <button class="btn btn-sm btn-info" types="Submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body">
+            <table class="table table-sm table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Bursary Category</th>
+                        <th scope="col">Date Created</th>
+                        <th scope="col">Deadline</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Action</th>
+                    </tr> 
+                </thead>
+                {% for bursary in applied_bursaries %}
+                    {% if forloop.counter <= 10 %}
+                    <tr>
+                    <th scope="row">{{ forloop.counter }}</th>
+                    <td>{{bursary.category}}</td>
+                    <td>{{bursary.dateCreated}}</td>
+                    <td>{{bursary.deadline}}</td>
+                    <td>{{bursary.status}}</td>
+                    <td>{{bursary.bursaryAmount|floatformat:2}}</td>
+                    <td>
+                        {% if bursary.status == 'Pending' %}
+                            <a class="btn btn-sm btn-warning" href="{% url 'update_bursary' bursary.id %}">Update</a>
+                        {% endif %}
+                    </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+            </table> 
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row mt-3">
+    <div class="col text-center">
+        <hr>
+        <h5>STUDENTS:</h5>
+        <div class="row my-2">
+            <div class="col">
+                <div class="card card-body">
+                    <p class="text-center text-secondary"><i>Search Applicant</i></p>
+                    <form method="get">
+                        {{applicantFilter.form}}
+                        <button class="btn btn-sm btn-info" types="Submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body">
+            <table class="table table-sm">
+                 <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Student's Name</th>
+                    <th scope="col">Study Level</th>
+                    <th scope="col">Guardian Name</th>
+                    <th scope="col">Ward</th>
+                    <th scope="col">Action</th>
+                 </tr>
+                 {% if applicants|length == 0 %}
+                    <tr>
+                        <td colspan="6" class="text-danger">No Matching Results</td>
+                    </tr>
+                {% else %}
+                {% for applicant in applicants %}
+                    {% if forloop.counter <= 10 %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{applicant.firstName}} {{applicant.lastName}}</td>
+                        <td>{{applicant.studyLevel}}</td>
+                        <td>
+                            {% if applicant.guardian %}
+                                {{ applicant.guardian.guardianName }}
+                            {% else %}
+                                None
+                            {% endif %}
+                        </td>
+                        <td>{{ applicant.ward }}</td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'applicant' applicant.id %}">View</a></td>
+                    </tr>
+                  {%  endif %}
+                {% endfor%}
+                
+            </table>
+            <table>
+                <tr><a class="btn btn-sm btn-info addlink" style="background-color: aquamarine;" href="{% url 'applicant_list' %}">More Applicants</a></tr>
+                <tr><a class="btn btn-sm btn-info mt-2 addlink" style="background-color: aquamarine;" href="{% url 'generate_pdf' %}">Download pdf for applicants with disbursed bursaries</a></tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col text-center">
+        <h5>Institutions:</h5>
+        <div class="row my-2">
+            <div class="col">
+                <div class="card card-body">
+                    <p class="text-center text-secondary"><i>Search Institution</i></p>
+                    <form method="get">
+                        {{institutionFilter.form}}
+                        <button class="btn btn-sm btn-info" types="Submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="card card-body">
+            
+            <table class="table table-sm">
+                 <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Institution Name</th>
+                    <th scope="col">Institution Level</th>
+                    <th scope="col">Institution Contact</th>
+                    <th scope="col">Students</th>
+                    <th scope="col">Action</th>
+                 </tr>
+                 {% if institution|length == 0 %}
+                    <tr>
+                        <td colspan="6" class="text-danger">No Matching Results</td>
+                    </tr>
+                {% else %}
+                {% for x in institution %}
+                    {% if forloop.counter <= 10 %}
+                    <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{ x.institutionName }}</td>
+                        <td>{{ x.institutionLevel }}</td>
+                        <td>{{ x.institutionContact }}</td>
+                        <td>
+                            <a class="btn btn-sm btn-info" href="{% url 'institution_applicants' x.id %}">View</a>
+                        </td>
+                        <td>
+                            <a class="btn btn-sm btn-warning" href="{% url 'update_institutionContact' x.id %}">Update Contact</a>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor%}
+            </table>
+            <table>
+                <tr>
+                    <a class="btn btn-sm btn-info addlink" style="background-color: aquamarine; float: left;" href="{% url 'institution_list' %}">View More Institutions</a>
+            {% endif %}
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+<!--<div class="row text-center">
+    <div class="col md-6 text-center mt-4">
+        <hr>
+        <h5>Constituencies and Wards</h5>
+        <div class="card card-body">
+            <table class="table table-sm table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Constituency Name</th>
+                        <th scope="col">Wards</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center">
+                    {% for c in constituencies %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ c.constituencyName }}</td>
+                            <td>
+                                {% for ward in c.ward_set.all %}
+                                    {{ ward.wardName }}
+                                    {% if not forloop.last %},{% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a class="btn btn-sm btn-warning" href="">Update</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>-->
+
+
+

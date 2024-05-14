@@ -1,0 +1,45 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+KCBAWS|login
+{% endblock title%}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="container">
+        {% for message in messages %}
+            {{message}}
+        {% endfor %}
+        <div class="row mt-5">
+            <div class="col-md-6 offset-md-3">
+                <div class="border p-3 bg-white">
+                   <h3 class="text-center">Login Below</h3>
+                   <hr> 
+                    <form action="" method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="exampleInputEmail1" class="form-label">Username</label>
+                            <input type="text" class="form-control" name="username" aria-describedby="emailHelp">
+                            <div id="emailHelp" class="form-text">We'll never share your Info with anyone else.</div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="exampleInputPassword1" class="form-label">Password</label>
+                            <input type="password" class="form-control" name="password">
+                        </div>
+                        <input class="btn btn-success" type="submit" value="Login">
+                        <div class="row">
+                            <div class="col">
+                                <p>Don't have an Account? <a href="{% url 'register' %}">Register</a></p>
+                            </div>
+                            <div class="col">
+                                <p>Forgot Your Password? <a href="{% url 'reset_password' %}">Reset</a></p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,30 @@
+{% extends 'partials/base.html'%}
+{% load static %}
+
+
+{% block title %}
+  {{request.user}} Update Bursary
+{%  endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+  <div class="row text-center">
+    <div class="col-md-6 offset-md-3">
+      <div class="card">
+        <div class="card-header bg-dark text-center text-white">
+          Update Bursary by Filling Me
+        </div>
+        <div class="card-body text-center">
+          <form action="" method="POST" >
+            {% csrf_token %}
+              {{ form|crispy }}
+              <input class="btn btn-info" type="submit" value ="Update">
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

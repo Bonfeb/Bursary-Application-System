@@ -1,0 +1,58 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock title %}</title>
+
+    <!--Locally Load Bootstrap CSS!-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Latest compiled and minified CSS -->
+    
+    <!--Load Font Awesome Icons-->
+    <link rel="stylesheet" 
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="icon" type="image/x-icon" href="{% static '/images/KC-logo.svg' %}"/>
+
+</head>
+
+<body style="background-color: rgb(163, 163, 163); padding: 1%"> 
+    
+    {% include 'partials/navbar.html' %}
+    <br>
+    <br>
+    <div class="container">
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-info alert-dismissible fade show" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% block content%}
+    {% endblock content%}
+    </div>
+
+    {% block footer %}
+    <footer class="mt-auto text-dark-50 py-4" style="text-align: center;">
+        <hr>
+        <p>KCBAWS | Copyright &copy 2023</p>
+        <hr>
+    </footer>
+    {% endblock footer %}
+
+    <!--Locally Load Bootstrap Javascript!-->
+    <script src="{% static 'js/bootstrap.bundle.js' %}"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+
+    <!-- Typeahead JavaScript for Suggestions
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/typeahead.js/0.11.1/typeahead.bundle.min.js"></script>-->
+
+
+</body>
+</html>

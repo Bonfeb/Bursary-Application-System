@@ -1,0 +1,57 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+    Applicants List
+{% endblock title %}
+
+{% block content %}
+    <div class="container">
+        <div class="row text-center">
+            <hr>
+            <h5>STUDENTS:</h5>
+            <hr>
+            <div class="row my-2">
+                <div class="col">
+                    <div class="card card-body">
+                        <p class="text-center text-secondary"><i>Search Applicant</i></p>
+                        <form method="get">
+                            {{applicantFilter.form}}
+                            <button class="btn btn-sm btn-info" types="Submit">Search</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-body">
+                <table class="table table-sm">
+                     <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Student's Name</th>
+                        <th scope="col">Study Level</th>
+                        <th scope="col">Guardian Name</th>
+                        <th scope="col">Ward</th>
+                        <th scope="col">Action</th>
+                     </tr>
+                    {% for applicant in applicants %}
+                      <tr>
+                        <th scope="row">{{ forloop.counter }}</th>
+                        <td>{{applicant.firstName}} {{applicant.lastName}}</td>
+                        <td>{{applicant.studyLevel}}</td>
+                        <td>{{ applicant.guardian.guardianName }}</td>
+                        <td>{{ applicant.ward }}</td>
+                        <td><a class="btn btn-sm btn-info" href="{% url 'applicant' applicant.id %}">View</a></td>
+                      </tr>
+                    {% endfor%}
+                </table>
+                <div class="row">
+                    <div class="col">
+                        <a class="btn btn-sm btn-info addlink" style="background-color: aquamarine; float: left;" href="{% url 'generate_pdf' %}">Download pdf for applicants with disbursed bursaries</a>
+                    </div>
+                    <div class="col">
+                        <a class="btn btn-sm btn-info addlink" style="background-color: aquamarine; float: right;" href="{% url 'admin_dashboard' %}">Back to Dashboard</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

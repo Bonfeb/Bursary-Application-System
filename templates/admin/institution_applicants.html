@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="auto">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ institution.institutionName}} Applicants</title>
+
+    <!--Locally Load Bootstrap CSS!-->
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+
+    <!-- Latest compiled and minified CSS -->
+    
+    <!--Load Font Awesome Icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <link rel="icon" type="image/x-icon" href="{% static '/images/KC-logo.svg' %}"/>
+</head>
+
+<body style="background-color: rgb(163, 163, 163); padding: 1%"> 
+    <div class="container">
+        <div class="row text-center">
+            <div class="card">
+                <div class="card-header">
+                    <h5><img src="{% static 'images/KC-logo.svg' %}" width="30" height="24" class="rounded"> KCBAWS - {{institution.institutionName}} Applicants List <img src="{% static 'images/KC-logo.svg' %}" width="30" height="24" class="rounded"></h5>
+
+                </div>
+                <div class="card-body">
+                    {% for applicant in applicants %}
+                    <table class="table table-md">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">First Name</th>
+                                <th scope="col">Last Name</th>
+                                <th scope="col">Current Year/Form</th>
+                                <th scope="col">Admission Number</th>
+                            </tr>
+                            <tr>
+                                <th scope="row">{{ forloop.counter }}</th>
+                                <td>{{ applicant.firstName }}</td>
+                                <td>{{ applicant.lastName }}</td>
+                                <td>{{ applicant.studyYear }}</td>
+                                <td>{{ applicant.admNo }}</td> 
+                            </tr>
+                        </thead>
+                    </table>
+                    <a class="btn btn-sm bg-primary  btn-info" href="?pdf=1">Generate Applicants Pdf</a>
+                    {% empty %}
+                        <p class="text-center">No applicants available at the moment.</p>
+                    {% endfor %} 
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

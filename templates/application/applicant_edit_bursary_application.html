@@ -1,0 +1,17 @@
+{% extends 'partials/base.html'%}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+{{request.user}} Update Bursary
+{%  endblock title %}
+
+{% block content %}
+    <div class="alert alert-primary" role="alert">
+        Only change the field you are want to. If you want to change a Bursary Status change that only!
+    </div>
+    <form action="" method="POST" enctype="multipart/form-data">
+        {{ form|crispy }}
+        <input class="btn btn-info" type="submit" value ="Update">
+    </form>
+{% endblock content %}

@@ -1,0 +1,47 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+  {{request.user}} Apply Bursary {{bursary.category}} {{bursary.bursaryAmount}}
+{% endblock title %}
+
+{% block content %}
+  <form action="{% url 'bursary_application' bursary.id %}" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="row text-center">
+      <div class="col">
+          <div class="card my-2">
+            <div class="card-header">
+              <div class="card-header bg-dark text-center text-white">
+                <strong><marquee><q>Kindly note you apply a bursary only once.</q></marquee></strong>
+                <h6>Bursary Details</h6>
+              </div>
+                <table class="table table-sm th-dark">
+                  <tr>
+                    <th>Bursary Level</th>
+                    <th>Bursary Amount</th>
+                    <th>Batch Number</th>
+                    <th>Financial Year</th>
+                    <th>Date Created</th>
+                    <th>Deadline Day</th>
+                    <th>Status</th>
+                  </tr>
+                  <tr>
+                    <td>{{bursary.category}}</td>
+                    <td>{{bursary.bursaryAmount}}</td>
+                    <td>{{bursary.batchNumber}}</td>
+                    <td>{{bursary.financialyear}}</td>
+                    <td>{{bursary.dateCreated}}</td>
+                    <td>{{bursary.deadline}}</td>
+                    <td>{{bursary.status}}</td>
+                  </tr>
+                </table>
+            </div>
+            <button class="button btn-primary btn-sm" type="submit">Apply</button>
+          </div>
+      </div>
+    </div>
+  </form>
+
+{% endblock %}
+

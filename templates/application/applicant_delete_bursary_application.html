@@ -1,0 +1,27 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+{{request.user}} Delete Bursary
+{%  endblock title %}
+
+{% block content %}
+
+<br>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card card-body">
+            <p>Are you sure you want to Delete "{{item}}"?</p>
+
+                <form action="{% url 'delete_bursary' item.id %}" method="POST">
+                    {% csrf_token %}
+
+                    <a class="btn btn-warning" href="{% url 'applicant_dashboard' %}">Cancel</a>
+
+                    <input class="btn btn-danger" type="submit" name="Confirm Delete">
+                </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

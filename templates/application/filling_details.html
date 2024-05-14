@@ -1,0 +1,181 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block title %}
+{{request.user}} | KCBAWS Fill-Details
+{% endblock title %}
+
+{% block content %}
+
+<div class="row text-center">
+  <hr>
+  <marquee><h5>Correctly and Honestly fill the forms below.</h5></marquee>
+  <hr>
+</div>
+ 
+<form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-md-6 my-2 p-2">
+        <div class="card">
+            <div class="card-body">
+                <fieldset>
+                <legend class="mt-2"><i class="fa-solid fa-user" style="color: rgba(212, 100, 7, 0.973);"></i> Personal Details</legend>
+                <hr>
+                <div class="row mt-2">
+                  <label for="firstName">First Name:</label>
+                  <input name="firstName" type="text">
+                </div>
+                <div class="row mt-2">
+                  <label for="middleName">Middle Name:</label>
+                  <input name="middleName" type="text">
+                </div>
+                <div class="row mt-2">
+                  <label for="lastName">Last Name:</label>
+                  <input name="lastName" type="text">
+                </div>
+                <div class="row mt-2">
+                  <label for="gender">Gender:</label>
+                  <select name="gender">
+                    <option class="selected">......</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                  </select>
+                </div>
+                <div class="row mt-2">
+                  <label for="DOB">Date of Birth:</label>
+                  <input name="DOB" type="text">
+                </div>
+                <div class="row mt-2">
+                  <label for="email">Email Address:</label>
+                  <input name="email" type="email">
+                </div>
+                <div class="row mt-2">
+                  <label for="contact">Phone Number:</label>
+                  <input name="contact" type="tel">
+                </div>
+                
+                <div class="row mt-2">
+                  <label for="IdOrBirth">ID or Birth(pdf form):</label>
+                  <input name="IdOrBirth" type="file">
+                </div>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 p-2">
+      <div class="row my-2 mx-2">
+        <div class="card">
+          <div class="card-body">
+            <fieldset>
+              <legend class="mt-2"><i class="fa-solid fa-users" style="color: rgba(212, 100, 7, 0.973);"></i> Guardian Details</legend>
+              <hr>
+              <div class="row mt-2">
+                <label for="guardianName">Guardian Name:</label>
+                <input name="guardianName" type="text">
+              </div>
+              <div class="row mt-2">
+                <label for="guardianGender">Guardian Gender:</label>
+                <select name="guardianGender">
+                  <option class="selected">......</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div class="row mt-2">
+                <label for="guardianContact">Guardian Contact:</label>
+                <input name="guardianContact" type="tel">
+              </div>
+              <div class="row mt-2">
+                <label for="guardianOccupation">Guardian Occupation:</label>
+                <input name="guardianOccupation" type="text">
+              </div>
+              <div class="row mt-2">
+                <label for="guardianID">Guardian ID:</label>
+                <input name="guardianID" type="file">
+              </div>
+            </fieldset>            
+          </div>
+       </div>
+      </div>
+      <div class="container">
+        <div class="row p-2 my-2">
+          <div class="card">
+            <div class="card-body">
+              <fieldset>
+                <legend><i class="fa-solid fa-house" style="color: rgb(145, 7, 64);"></i> Residential Details</legend>
+                <hr>
+                  <div class="row">
+                    <label for="constituencyName" class="form-label">Constituency</label>
+                    <select name="constituencyName">
+                      <option class="selected">......</option>
+                      {% for constituency in form.constituencyName.field.queryset %}
+                        <option value="{{ constituency.pk }}">{{ constituency.constituencyName }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <div class="row">
+                    <label for="wardName" class="form-label">Ward</label>
+                    <select name="wardName">
+                      <option class="selected">......</option>
+                      {% for ward in form.wardName.field.queryset %}
+                        <option value="{{ ward.pk }}">{{ ward.wardName }}</option>
+                      {% endfor %}
+                    </select>
+                  </div>
+              </fieldset>
+            </div>
+          </div>
+        </div>
+      </div>
+  </div>
+  <div class="row my-4 mx-2">
+    <div class="card">
+        <div class="card-body">
+            <fieldset>
+                <legend class="mt-2"><i class="fa-solid fa-school" style="color: rgb(145, 7, 64);"></i> Academic Details</legend>
+                <hr>
+                <div class="row mt-2">
+                  <label for="institutionName">Institution Name:</label>
+                  <select name="institutionName">
+                    <option class="selected">......</option>
+                    {% for institution in form.institutionName.field.queryset %}
+                      <option value="{{ institution.pk }}">{{ institution.institutionName }}</option>
+                    {% endfor %}
+                  </select>
+                </div>
+                <div class="row mt-2">
+                  <label for="studyLevel">Level of Study:</label>
+                  <select name="studyLevel">
+                    <option class="selected">......</option>
+                    <option value="University">University</option>
+                    <option value="College">College</option>
+                    <option value="Secondary">Secondary</option>
+                  </select>
+                </div>
+                <div class="row mt-2">
+                  <label for="studyYear">Year/Form of Study:</label>
+                  <input name="studyYear" type="text">
+                </div>
+                <div class="row mt-2">
+                  <label for="course">Course:</label>
+                  <input name="course" type="text" placeholder="Nursing/None">
+                  <div id="emailHelp" class="form-text">Your course if level of study is University/College, say 'None' if secondary.</div>
+                </div>
+                <div class="row mt-2">
+                  <label for="admNo">Admission Number:</label>
+                  <input name="admNo" type="text">
+                </div>
+            </fieldset>
+        </div>
+    </div>
+  </div>
+  <div class="mt-4 text-center">
+    <button type="submit" class="btn btn-primary btn-md" style="background-color:hsl(157, 96%, 49%)" name="submit">Submit</a>
+  </div>
+  </div>
+</form>
+
+{% endblock content %}
+

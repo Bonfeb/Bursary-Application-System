@@ -1,0 +1,33 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+KCBAWS|register
+{% endblock title %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class="container">
+  {% for message in messages %}
+  <div class="alert alert-success" role="alert">
+    {{message}}
+  </div>
+  {% endfor %}
+  <div class="row mt-5">
+    <div class="col-md-6 offset-md-3">
+      <div class="border bg-white p-3">
+        <h3 class="text-center">Register Below</h3>
+        <hr>
+        <form action="" method="POST" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {{ form.errors }}
+          <input class="btn btn-success" type="submit" value="Register">
+          <p>Already have an Account? <a href="{% url 'login' %}">Login</a></p>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock content %}

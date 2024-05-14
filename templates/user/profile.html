@@ -1,0 +1,49 @@
+{% extends 'partials/base.html' %}
+{% load static %}
+
+{% block title %}
+{{request.user}} Profile
+{% endblock title%}
+
+{% load crispy_forms_tags %}
+
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header bg-dark text-center text-white">
+                Profile Information
+                </div>
+                <div class="card-body text-center">
+                    <!--<img src="{{ user.applicant.image.url }}" alt="User Profile Picture" class="rounded-circle img-fluid" style="max-width: 200px;">-->
+                    {% if request.user.profilePicture %}
+                        <img src="{{ request.user.profilePicture.url }}" alt="Profile Picture" class="rounded-circle img-fluid" style="max-width: 200px;">
+                    {% else %}
+                        <img src="{% static 'images/profile_avatar.jpg' %}" alt="Default Profile Picture" class="rounded-circle img-fluid" style="max-width: 200px;">
+                    {% endif %}
+
+                    <table class="table bg-white table-borderless">
+                        <tbody>
+                            <tr>
+                                <th scope="row" style="text-align: center;">Username</th>
+                                <td style="color: rgb(44, 168, 127);">{{user.username}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Email</th>
+                                <td style="color: rgb(44, 168, 127);">{{user.email}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Contact</th>
+                                <td style="color: rgb(44, 168, 127);">{{user.profileContact}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <a class="btn btn-info btn-sm float right" href="{% url 'profile_update' %}">Edit</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
