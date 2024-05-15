@@ -87,15 +87,16 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         #'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'KCBAWS',
-        'USER': 'postgres',
-        'PASSWORD': config('DB_PASSWORD'),
-        'HOST': config('DB_HOST'),
-        'PORT': config('DB_PORT', cast=int),
+        #'NAME': 'KCBAWS',
+        #'USER': 'postgres',
+        #'PASSWORD': config('DB_PASSWORD'),
+        #'HOST': config('DB_HOST'),
+        #'PORT': config('DB_PORT', cast=int),
         #'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
     }
 }
 
+DATABASES["default"] = dj_database_url.parse(config("DB_URL"))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
