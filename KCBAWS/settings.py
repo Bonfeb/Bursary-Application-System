@@ -17,9 +17,12 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-#DATABASE_URL = os.environ.get('DATABASE_URL')
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
+database_url = os.environ.get('DATABASE_URL')
+if not database_url:
+    raise ValueError("DATABASE_URL environment variable is not set")
+
+print("DATABASE_URL:", database_url)
+
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
@@ -78,24 +81,16 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'KCBAWS.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        #'ENGINE': 'django.db.backends.mysql',
-        #'NAME': 'KCBAWS',
-        #'USER': 'postgres',
-        #'PASSWORD': config('DB_PASSWORD'),
-        #'HOST': config('DB_HOST'),
-        #'PORT': config('DB_PORT', cast=int),
-        #'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"}
-    }
-}
-
-DATABASES["default"] = dj_database_url.parse(os.environ.get('DATABASE_URL'))
+try:
+    DATABASES = {
+    'default': dj_database_url.parse('database_url')
+} 
+    print("Parsed Database Config:", DATABASES["default"])
+except ValueError as e:
+    raise ValueError(f"Error parsing DATABASE_URL: {e}")
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -160,7 +155,7 @@ LOGIN_REDIRECT_URL = 'index'
 
 #SMTP CONFIGURATION
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-DEFAULT_FROM_EMAIL  = config('DEFAULT_FROM_EMAIL')
+DEFAULT_FROM_EMAIL  = os.environ.get('DEFAULT_FROM_EMAIL')
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST')
 EMAIL_PORT = os.environ.get('EMAIL_PORT')

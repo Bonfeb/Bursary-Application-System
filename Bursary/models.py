@@ -29,7 +29,7 @@ class Bursary(models.Model):
         ('12500', '12500'),
     )
     category = models.CharField(max_length=200, null=True, choices=CATEGORY)
-    bursaryAmount = models.CharField(choices=Amount, null=True)
+    bursaryAmount = models.CharField(choices=Amount, max_length=30, null=True)
     financialyear = models.CharField(max_length=200, null=True)
     batchNumber = models.CharField(max_length=200, null=True)
     status = models.CharField(max_length=200, null=True, choices=STATUS, default='Pending')
@@ -62,7 +62,7 @@ class Institution(models.Model):
         ('Private', 'Private'),
     )
     institutionName = models.CharField(max_length=200, null=True)
-    institutionLevel = models.CharField(null=True, choices = LEVEL)
+    institutionLevel = models.CharField(null=True, choices = LEVEL, max_length=200)
     institutionStatus = models.CharField(max_length=200, null=True, choices = STATUS)
     institutionContact = models.CharField(max_length=35, null=True)
 
