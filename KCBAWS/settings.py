@@ -31,7 +31,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG')
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '').split(" ")
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1:8000').split(" ")
 
 AUTH_USER_MODEL = 'Bursary.CustomUser'
 
@@ -162,3 +162,6 @@ EMAIL_PORT = os.environ.get('EMAIL_PORT')
 EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+
+
+#postgres://kcbaws_user:yHH7Fdg7EczKQ0zt7lfAVVvObUo2z6M8@dpg-cp2fub0l6cac73de85ng-a.oregon-postgres.render.com/kcbaws
