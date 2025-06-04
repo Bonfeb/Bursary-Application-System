@@ -17,13 +17,6 @@ import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-database_url = os.environ.get('DATABASE_URL')
-if database_url.startswith('postgresql://'):
-    database_url = database_url.replace('postgresql://', 'postgres://')
-
-print("DATABASE_URL:", database_url)
-
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY')
 
@@ -85,8 +78,14 @@ WSGI_APPLICATION = 'KCBAWS.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 try:
+    database_url = config('DATABASE_URL')
+    if not database_url:
+        raise ValueError("DATABASE_URL environment variable is not set")
+    if database_url.startswith('postgresql://'):
+        database_url = database_url.replace('postgresql://', 'postgres://')
+
     DATABASES = {
-    'default': dj_database_url.parse(database_url)
+    'default': dj_database_url.parse(database_url, conn_max_age=600)
 } 
     print("Parsed Database Config:", DATABASES["default"])
 except ValueError as e:
