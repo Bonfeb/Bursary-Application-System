@@ -18,8 +18,8 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 database_url = os.environ.get('DATABASE_URL')
-if not database_url:
-    raise ValueError("DATABASE_URL environment variable is not set")
+if database_url.startswith('postgresql://'):
+    database_url = database_url.replace('postgresql://', 'postgres://')
 
 print("DATABASE_URL:", database_url)
 
@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'KCBAWS.wsgi.application'
 
 try:
     DATABASES = {
-    'default': dj_database_url.parse('database_url')
+    'default': dj_database_url.parse(database_url)
 } 
     print("Parsed Database Config:", DATABASES["default"])
 except ValueError as e:
