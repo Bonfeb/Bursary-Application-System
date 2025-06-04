@@ -117,8 +117,8 @@ whitenoise==6.6.0
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/bursary-app.git
-   cd bursary-app
+   git clone https://github.com/yourusername/bursary-app.git](https://github.com/Bonfeb/Bursary-Application-System.git
+   cd Bursary-Application-System
    ```
 
 2. Create a virtual environment:
