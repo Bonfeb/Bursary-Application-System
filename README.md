@@ -1,5 +1,3 @@
----
-
 # 🧾 Online Bursary Application System
 
 This is a web application that enables students to apply for bursaries **online** without the need to submit documents physically. The platform categorizes bursaries by **County**, **Constituency**, and **Ward** levels, enforcing application rules specific to each category.
@@ -8,12 +6,24 @@ This is a web application that enables students to apply for bursaries **online*
 
 ## 🌐 Features
 
-* Students can register, log in, and apply for bursaries.
+### 🎓 For Students
+
+* Register, log in, and apply for bursaries.
 * **County-level bursaries**: Open to students from any ward or constituency within the county.
 * **Constituency-level bursaries**: Restricted to students from a specific constituency, regardless of their ward.
 * **Ward-level bursaries**: Restricted to students residing in the specific ward.
 * Students can **only apply once** to any given bursary.
 * Document submission is handled digitally—no physical documents required.
+
+### 🛡️ For Admins
+
+* **CRUD operations**: Create, update, delete, and manage bursary categories (County, Constituency, Ward).
+* **Application Review**: View all bursary applications.
+* **Approval Workflow**:
+
+  * Review submitted supporting documents.
+  * **Approve** or **cancel** applications based on document verification.
+* Manage user accounts and monitor system usage.
 
 ---
 
@@ -59,11 +69,46 @@ whitenoise==6.6.0
 
 ---
 
-## ⚙️ Deployment
+## 🧩 PostgreSQL Database Setup
 
-* Configure environment variables using `.env` and `python-decouple`.
-* Serve static files using **WhiteNoise**.
-* Deploy using **Gunicorn** and any WSGI-compatible web server.
+1. **Create a PostgreSQL database**:
+
+   ```bash
+   psql -U postgres
+   CREATE DATABASE bursary_db;
+   CREATE USER bursary_user WITH PASSWORD 'your_secure_password';
+   ALTER ROLE bursary_user SET client_encoding TO 'utf8';
+   ALTER ROLE bursary_user SET default_transaction_isolation TO 'read committed';
+   ALTER ROLE bursary_user SET timezone TO 'UTC';
+   GRANT ALL PRIVILEGES ON DATABASE bursary_db TO bursary_user;
+   ```
+
+2. **Create a `.env` file** in your project root:
+
+   ```
+   DEBUG=True
+   SECRET_KEY=your_secret_key_here
+   ALLOWED_HOSTS=127.0.0.1,localhost
+
+   DB_NAME=bursary_db
+   DB_USER=bursary_user
+   DB_PASSWORD=your_secure_password
+   DB_HOST=localhost
+   DB_PORT=5432
+   ```
+
+3. **Update `settings.py`** to use `python-decouple` and `dj-database-url` for DB config (example snippet):
+
+   ```python
+   from decouple import config
+   import dj_database_url
+
+   DATABASES = {
+       'default': dj_database_url.config(
+           default=f"postgres://{config('DB_USER')}:{config('DB_PASSWORD')}@{config('DB_HOST')}:{config('DB_PORT')}/{config('DB_NAME')}"
+       )
+   }
+   ```
 
 ---
 
@@ -89,22 +134,19 @@ whitenoise==6.6.0
    pip install -r requirements.txt
    ```
 
-4. Run migrations:
+4. **Create PostgreSQL DB and configure `.env`** as shown above.
+
+5. Run migrations:
 
    ```bash
    python manage.py migrate
    ```
 
-5. Start development server:
+6. Start development server:
 
    ```bash
    python manage.py runserver
    ```
 
----
-
 ## 📄 License
-
 This project is licensed under the MIT License.
-
-
