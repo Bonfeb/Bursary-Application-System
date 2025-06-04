@@ -1,5 +1,3 @@
-Here's a `README.md` file content for your bursary application web app:
-
 ---
 
 # 🧾 Online Bursary Application System
